@@ -1,12 +1,12 @@
 # [START cloudbuild]
 steps:
 # This step runs the unit tests on the app
-- name: 'python:3.7-slim'
-  id: Test
-  entrypoint: /bin/sh
-  args:
-  - -c
-  - 'pip install flask && python test_app.py -v'
+#- name: 'python:3.7-slim'
+#  id: Test
+#  entrypoint: /bin/sh
+#  args:
+#  - -c
+#  - 'pip install flask && python test_app.py -v'
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'
@@ -28,7 +28,7 @@ steps:
 # [END cloudbuild]
 
 # [START cloudbuild-trigger-cd]
-# This step clones the hello-cloudbuild-env repository
+# This step clones the moonbank-env repository
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Clone env repository
   entrypoint: /bin/sh
@@ -36,7 +36,7 @@ steps:
   - '-c'
   - |
     gcloud source repos clone moonbank-env && \
-    cd hello-cloudbuild-env && \
+    cd moonbank-env && \
     git checkout candidate && \
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
 # This step generates the new manifest
